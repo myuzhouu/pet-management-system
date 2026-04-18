@@ -79,8 +79,9 @@ public class App {
                         Cat cat = (Cat) animal;
                         cat.catchMouse();
     }
-                    break;
+                    
                 }
+                break;
             case 0:
                 System.out.println("感谢使用宠物管理系统，期待与您的下次相遇。再见！");
                 sc.close();
