@@ -1,12 +1,18 @@
 package Test;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class App {
+
+    static int nextId = 1;
     public static void main(String[] args) {
         String name;
+        
         int age;
         Scanner sc = new Scanner(System.in);
+        HashMap<Integer,Animal> map = new HashMap<>();
+
         ArrayList<Animal> animals = new ArrayList<>();
         while(true){
         System.out.println("------------------欢迎来到宠物管理系统！-----------------------");
@@ -30,7 +36,10 @@ public class App {
                     name = sc.next();
                     System.out.println("请输入您宠物的年龄：");
                     age = sc.nextInt();
-                    animals.add(new Dog(name,age));
+                    Dog dog = new Dog(name, age);
+                    map.put(nextId,dog);
+                    nextId++;
+                    //animals.add(new Dog(name,age));
                     System.out.println("恭喜您添加爱宠修狗成功！");
                 }
                 else if(choseNumber == 2){
@@ -38,18 +47,30 @@ public class App {
                     name = sc.next();
                     System.out.println("请输入您宠物的年龄：");
                     age = sc.nextInt();
-                    animals.add(new Cat(name,age));
+                    Cat cat = new Cat(name, age);
+                    map.put(nextId,cat);
+                    nextId++;
+                    //animals.add(new Cat(name,age));
                     System.out.println("恭喜您添加爱宠喵喵成功！");
                 }
                 break;
             case 2:
                 System.out.println("请输入您想要删除的宠物编号：");
                 int num = sc.nextInt();
-                 animals.remove(num-1);
+                
+                Animal animal1 = map.get(num);
+                if(animal1 instanceof Dog){
+                    Dog.dogSum--;
+                }
+                if(animal1 instanceof Cat){
+                    Cat.catSum--;
+                }
+                map.remove(num);
+                System.out.println("恭喜您删除爱宠成功，您太狠心了！");
                  break;
             case 3:
                 
-                System.out.println("您的宠物总共有"+animals.size()+"只！");
+                System.out.println("您的宠物总共有"+map.size()+"只！");
                 break;
             case 4:
                 System.out.println("您的修狗总共有"+Dog.dogSum+"只！");
@@ -58,29 +79,52 @@ public class App {
                 System.out.println("您的喵喵总共有"+Cat.catSum+"只！");
                 break;
             case 6:
-                for(int i=0;i<animals.size();i++){
-                    Animal animal = animals.get(i);
-                    System.out.println("第"+(i+1)+"只宠物名字叫："+animal.getName()+",爱宠今年"+animal.getAge()+"岁了。");
+
+                for (Integer id : map.keySet()){
+                    Animal animal = map.get(id);
+                    System.out.println( "宠物ID：" + id + " 名字：" + animal.getName() + " 年龄：" + animal.getAge() );
                 }
+                // for(int i=0;i<animals.size();i++){
+                //     Animal animal = animals.get(i);
+                //     System.out.println("第"+(i+1)+"只宠物名字叫："+animal.getName()+",爱宠今年"+animal.getAge()+"岁了。");
+                // }
                 break;
             case 7:
-                for(Animal animal: animals){
+
+                for (Integer id : map.keySet()){
+                    Animal animal = map.get(id);
                     animal.eat();
                     animal.sleep();
                 }
+                // for(Animal animal: animals){
+                //     animal.eat();
+                //     animal.sleep();
+                // }
                 break;
             case 8:
-                for(Animal animal: animals){
-                    if (animal instanceof Dog) {
+                for (Integer id : map.keySet()){
+                    Animal animal = map.get(id);
+                      if (animal instanceof Dog) {
                         Dog dog = (Dog) animal;
                         dog.watchHouse();
     }
                     if (animal instanceof Cat) {
                         Cat cat = (Cat) animal;
                         cat.catchMouse();
-    }
-                    
                 }
+            }
+
+    //             for(Animal animal: animals){
+    //                 if (animal instanceof Dog) {
+    //                     Dog dog = (Dog) animal;
+    //                     dog.watchHouse();
+    // }
+    //                 if (animal instanceof Cat) {
+    //                     Cat cat = (Cat) animal;
+    //                     cat.catchMouse();
+    // }
+                    
+    //             }
                 break;
             case 0:
                 System.out.println("感谢使用宠物管理系统，期待与您的下次相遇。再见！");
