@@ -8,13 +8,13 @@ public class AnimalManager {
        animalMap.put(id,animal);
        System.out.println("恭喜您添加爱宠成功！");
 }
-    public void delAnimal(Integer id){
+    public void deleteAnimal(Integer id){
         if(animalMap.containsKey(id)){
-                Animal animalDel = animalMap.get(id);
-                if(animalDel instanceof Dog){
+                Animal animal = getAnimalById(id);
+                if(animal instanceof Dog){
                     Dog.dogSum--;
                 }
-                if(animalDel instanceof Cat){
+                if(animal instanceof Cat){
                     Cat.catSum--;
                 }
                 animalMap.remove(id);
@@ -23,11 +23,12 @@ public class AnimalManager {
                 else
                     System.out.println("您输入的宠物编号不存在！");
     }
-    public void showAllanimals(){
+    public void showAllAnimals(){
         for(Integer id : animalMap.keySet()){
-            Animal animal = animalMap.get(id);
-            System.out.println( "宠物ID：" + id + " 名字：" + animal.getName() + " 年龄：" + animal.getAge() );
+            Animal animal = getAnimalById(id);
+            System.out.println( "宠物ID：" + id + " ,名字：" + animal.getName() + " ,年龄：" + animal.getAge() );
         }
+
     }
     public void showDogCount(){
         System.out.println("您的修狗总共有"+Dog.dogSum+"只！");
@@ -40,14 +41,14 @@ public class AnimalManager {
     }
     public void doRegular(){
         for (Integer id : animalMap.keySet()){
-                    Animal animal = animalMap.get(id);
+                    Animal animal = getAnimalById(id);
                     animal.eat();
                     animal.sleep();
                 }
     }
     public void doSpecial(){
            for (Integer id : animalMap.keySet()){
-                    Animal animal = animalMap.get(id);
+                    Animal animal = getAnimalById(id);
                       if (animal instanceof Dog) {
                         Dog dog = (Dog) animal;
                         dog.watchHouse();
@@ -58,4 +59,38 @@ public class AnimalManager {
                 }
             }
     }
-}
+    public void modifyAnimal(Integer id , Integer age,String name){
+            
+                Animal animal = getAnimalById(id);
+            System.out.println("您宠物当前信息如下："+"宠物ID：" + id + " ,名字：" + animal.getName() + " ,年龄：" + animal.getAge() );
+            animal.setAge(age);
+            animal.setName(name);
+            System.out.println("------------------------------------------------------------------------------------------");
+            System.out.println("您修改后的宠物信息如下："+"宠物ID：" + id + " ,名字：" + animal.getName() + " ,年龄：" + animal.getAge() );
+            System.out.println("恭喜您修改宠物信息成功！");
+            
+           
+    }
+    public void findAnimal(Integer id){
+            
+            
+                
+                Animal animal = getAnimalById(id);
+            if (animal instanceof Dog){
+                System.out.println("您宠物当前信息如下："+"宠物ID：" + id + " ,修狗的名字：" + animal.getName() + " ,年龄：" + animal.getAge() );
+            }
+            if (animal instanceof Cat){
+                System.out.println("您宠物当前信息如下："+"宠物ID：" + id + " ,喵喵的名字：" + animal.getName() + " ,年龄：" + animal.getAge() );
+            }
+            }
+            
+    public boolean containsId(Integer id){
+        return animalMap.containsKey(id);
+    }
+           
+
+    public Animal getAnimalById(Integer id){
+        return animalMap.get(id);
+    }
+    }
+
