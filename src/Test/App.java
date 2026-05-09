@@ -1,7 +1,7 @@
 package Test;
 import java.util.Scanner;
 public class App {
-    static int nextId = 1;
+    
     public static void main(String[] args) {
         String name;
         int age;
@@ -33,8 +33,8 @@ public class App {
                     System.out.println("请输入您宠物的年龄：");
                     age = sc.nextInt();
                     Animal dog = new Dog(name, age);
-                    manager.addAnimal(nextId, dog);
-                    nextId++;
+                    manager.addAnimal(dog);
+                    
                 }
                 else if(choseNumber == 2){
                     System.out.println("请输入您宠物的名字：");
@@ -42,9 +42,12 @@ public class App {
                     System.out.println("请输入您宠物的年龄：");
                     age = sc.nextInt();
                     Animal cat = new Cat(name, age);
-                    manager.addAnimal(nextId,cat);
-                    nextId++;
+                    manager.addAnimal(cat);
+                    
                 }
+                else{
+                System.out.println("宠物类型输入错误，请输入1或2！");
+}
                 break;
             case 2:
                 System.out.println("请输入您想要删除的宠物编号：");
@@ -70,6 +73,7 @@ public class App {
                 manager.doSpecial();
                 break;
             case 9:
+                    
                     System.out.println("请输入您宠物的id标号：");
                     id = sc.nextInt();
                     if(!manager.containsId(id)){
@@ -89,7 +93,6 @@ public class App {
                     if(!manager.containsId(id)){
                         System.out.println("您输入的宠物编号不存在！");
                         break;
-                        
                     }
                     manager.findAnimal(id);
                 break;
